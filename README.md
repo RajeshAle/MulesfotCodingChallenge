@@ -7,7 +7,13 @@ As Part of Contact-Info API , i exposed 4 Resources
 3. communication - POST,  PUT, GET, DELETE
 4.  identification - POST, PUT,  GET, DELETE
 
-Below are the URLs to consume.
+
+Below are the URLs to consume. (**Dont forget to send client_id and client_secret in request header section**)
+*client_id:90c7b4e0bfbf4f88aa047718d1739225
+
+client_secret:2796dE2DB44a42eAb57e6e5981b71C7c*
+
+**Currently the application is deployed in my trial-account of mulesoft cloud. it might get expire exactly one month from today - June 11th **
 
   http://ms3inc.us-e2.cloudhub.io/api/composite - POST  (application/json) -- for inserting identification,address and communication
   
@@ -174,7 +180,7 @@ Coming to Mulesoft Implementation created `ContactInfo.raml` published to exchan
 from there i created  `global.xml , contact-process-data.xml , contact-db-calls.xml` along with dev-properties.yaml and configuration.yaml for database connection.
 
 
-I tried to implement experience ,process and system pattern. all the db related interactions happens in `contact-db-calls.xml`. I used Database Connectors (select,insert,update,delete) - The reason why i havent used or implemented for bulk insert is `bulk insert doesnt send back auto generated keys when you insert, so you have to use insert to get the id back in response`.
+I tried to implement experience ,process and system pattern. all the db related interactions happens in `contact-db-calls.xml`. I used Database Connectors (select,insert,update,delete) - The reason why i havent used or implemented bulk insert is `bulk insert doesnt send back auto generated keys when you insert, so you have to use insert to get the id back in response`.
 
 ### **Belo Database Related Information is _extremely_ important**:
 
