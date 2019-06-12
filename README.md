@@ -182,7 +182,7 @@ from there i created  `global.xml , contact-process-data.xml , contact-db-calls.
 
 I tried to implement experience ,process and system pattern. all the db related interactions happens in `contact-db-calls.xml`. I used Database Connectors (select,insert,update,delete) - The reason why i havent used or implemented bulk insert is `bulk insert doesnt send back auto generated keys when you insert, so you have to use insert to get the id back in response`.
 
-### **Belo Database Related Information is _extremely_ important**:
+### **Below Database Related Information is _extremely_ important**:
 
 
 ### Database details:
