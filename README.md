@@ -17,15 +17,15 @@ Below are the URLs to consume. (**Dont forget to send client_id and client_secre
 
  - http://ms3inc.us-e2.cloudhub.io/api/composite - POST  (application/json) -- for inserting identification,address and communication
   
-  -  http://ms3inc.us-e2.cloudhub.io/api/address - POST  (application/json) for inserting address 
+  -  http://ms3inc.us-e2.cloudhub.io/api/address - POST  (application/json) for inserting address
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - PUT/ID  (application/json) for updating address 
+  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - PUT/ID  (application/json) for updating address
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - GET/ID   for retrieving address 
+  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - GET/ID   for updating address
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - DELETE/ID  for deleting address 
-  
-  - http://ms3inc.us-e2.cloudhub.io/api/identification - POST  (application/json) for inserting identification
+  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - DELETE/ID for deleting address
+	
+   - http://ms3inc.us-e2.cloudhub.io/api/identification - POST(application/json) for inserting identification
   
   	- http://ms3inc.us-e2.cloudhub.io/api/identification/45 - PUT/ID  (application/json) for updating identification
   
