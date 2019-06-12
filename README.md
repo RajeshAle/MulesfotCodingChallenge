@@ -182,6 +182,12 @@ from there i created  `global.xml , contact-process-data.xml , contact-db-calls.
 
 I tried to implement experience ,process and system pattern. all the db related interactions happens in `contact-db-calls.xml`. I used Database Connectors (select,insert,update,delete) - The reason why i havent used or implemented bulk insert is `bulk insert doesnt send back auto generated keys when you insert, so you have to use insert to get the id back in response`.
 
+### For composite i did used database insert only but i used For-Each loop to insert multiple address and communication objects###
+
+- Here is how i implemented for composite. i took the identification object from payload, inserted into database got the id ,stored it in a variable.using scatter-gather split the request into two ,one for address and one for communication and sent identification_id in payload. and looped address and communication based on input objects.
+
+### I used only 4 Database connectors for this whole process, i tried to make more dynamic by not writing the sql query,input parameters on connector. I did built query and input parameters before sending to database at the process level.
+
 ### **Below Database Related Information is _extremely_ important**:
 
 
