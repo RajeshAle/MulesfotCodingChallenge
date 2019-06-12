@@ -13,27 +13,27 @@ Below are the URLs to consume.
   
   a.  http://ms3inc.us-e2.cloudhub.io/api/address - POST  (application/json) for inserting address 
   
-  b. http://ms3inc.us-e2.cloudhub.io/api/address/{32} - PUT/ID  (application/json) for updating address 
+  b. http://ms3inc.us-e2.cloudhub.io/api/address/32 - PUT/ID  (application/json) for updating address 
   
-  c. http://ms3inc.us-e2.cloudhub.io/api/address/{32} - GET/ID   for retrieving address 
+  c. http://ms3inc.us-e2.cloudhub.io/api/address/32 - GET/ID   for retrieving address 
   
-  d. http://ms3inc.us-e2.cloudhub.io/api/address/{32} - DELETE/ID  for deleting address 
+  d. http://ms3inc.us-e2.cloudhub.io/api/address/32 - DELETE/ID  for deleting address 
   
   e. http://ms3inc.us-e2.cloudhub.io/api/identification - POST  (application/json) for inserting identification
   
-  f. http://ms3inc.us-e2.cloudhub.io/api/identification/{45} - PUT/ID  (application/json) for updating identification
+  f. http://ms3inc.us-e2.cloudhub.io/api/identification/45 - PUT/ID  (application/json) for updating identification
   
-  g. http://ms3inc.us-e2.cloudhub.io/api/identification/{45} - GET/ID   for updating identification
+  g. http://ms3inc.us-e2.cloudhub.io/api/identification/45 - GET/ID   for updating identification
   
-  h. http://ms3inc.us-e2.cloudhub.io/api/identification/{45} - DELETE/ID for deleting identification
+  h. http://ms3inc.us-e2.cloudhub.io/api/identification/45 - DELETE/ID for deleting identification
   
   i. http://ms3inc.us-e2.cloudhub.io/api/communication - POST(application/json) for inserting communication
   
-  j. http://ms3inc.us-e2.cloudhub.io/api/communication/{65} - PUT(application/json) for inserting communication
+  j. http://ms3inc.us-e2.cloudhub.io/api/communication/65 - PUT(application/json) for inserting communication
   
-  k. http://ms3inc.us-e2.cloudhub.io/api/communication/{65} - GET for inserting communication
+  k. http://ms3inc.us-e2.cloudhub.io/api/communication/65 - GET for inserting communication
   
-  l. http://ms3inc.us-e2.cloudhub.io/api/communication/{65} - DELETE for inserting communication
+  l. http://ms3inc.us-e2.cloudhub.io/api/communication/65 - DELETE for inserting communication
   
   
   /composite 
@@ -176,4 +176,94 @@ from there i created  `global.xml , contact-process-data.xml , contact-db-calls.
 
 I tried to implement experience ,process and system pattern. all the db related interactions happens in `contact-db-calls.xml`. I used Database Connectors (select,insert,update,delete) - The reason why i havent used or implemented for bulk insert is `bulk insert doesnt send back auto generated keys when you insert, so you have to use insert to get the id back in response`.
 
-**Belo Database Related Information is _extremely_ important**
+### **Belo Database Related Information is _extremely_ important**:
+
+
+### Database details:
+
+- To solve the given assignment, I created a PostgreSQL 10.6 database on AWS.
+- **Hostname to connect to database**: ms3incdb.cqwrsogyzoi2.us-east-1.rds.amazonaws.com
+- **Database instance name**: ms3incdb
+- **username**: alerajesh
+- **password**: shared seperately in email.
+- **port number**: 5432
+- This database has three tables:
+
+  - **Table name**: identification
+  
+    | Column        | type           |
+    | ------------- |:-------------:|
+    |id          | integer |
+    |firstname   | text    |
+    |lastname    | text    |
+    |dob         | date    |
+    |gender      | text    |
+    |title       | text    |
+    
+  - **Table name**: address
+  
+    | Column        | type           |
+    | ------------- |:-------------:|
+    |id                     | integer |
+    |type                   | text    |
+    |number                 | integer |
+    |street                 | text    |
+    |unit                   | text    |
+    |city                   | text    |
+    |state                  | text    |
+    |zipcode                | text    |
+    |identification_id      | integer |
+    
+  - **Table name**: communication
+  
+    | Column        | type           |
+    | ------------- |:-------------:|
+    |id                     | integer |
+    |type                   | text    |
+    |value                  | text    |
+    |preferred              | text    |
+    |identification_id      | integer |
+
+- SQL Queries for creating table:
+
+
+   -identification: 
+   ```
+         CREATE TABLE IF NOT EXISTS Identification (
+        id serial PRIMARY KEY,
+        firstname text,
+        lastname text,
+        dob date,
+        gender text,
+        title text
+          );
+   ```
+   
+   -communication:
+   
+   ```
+   CREATE TABLE Communication (
+	id serial PRIMARY KEY,
+    type text,
+    value text,
+    preferred  text,
+    Identification_Id integer,    
+    FOREIGN KEY (Identification_Id) REFERENCES Identification (id)
+      );
+   ```
+   
+   -address:
+   ```
+    CREATE TABLE Address (
+	id serial PRIMARY KEY,
+    type text, 
+    number integer,
+    street text,
+    Unit text,
+    City text,
+    State text,
+    zipcode text,
+    Identification_Id integer,
+    FOREIGN KEY (Identification_Id) REFERENCES Identification (id)
+      );
+   ```
