@@ -1,0 +1,9 @@
+env:
+  name: "dev"
+
+db:
+  host: "ms3incdb.cqwrsogyzoi2.us-east-1.rds.amazonaws.com"
+  port: "5432"
+  name: "ms3incdb"
+  username: "alerajesh"
+  password: "ms3inc123"

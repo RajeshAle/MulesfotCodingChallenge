@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="identification" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#6d27a5f1-6790-4568-9a49-100231f63abe"/>
+  <types:enrichment select="#f0f811ca-1a39-42d1-8bcd-86b65f71353a"/>
+  <types:enrichment select="#865dc69d-baa2-4610-bd6a-f01d61e4d9bd"/>
+  <types:enrichment select="#2883510a-4b45-4b08-8f4a-a4eb7394e740"/>
+  <types:enrichment select="#b34a9cb0-074d-4a27-99a3-87b810d7a606"/>
+  <types:enrichment select="#4b180dc7-54e9-4682-8fc9-b6bd775bf8b1"/>
+  <types:enrichment select="#45c77c44-ed59-4c92-8e13-d731b2563cf7"/>
+  <types:enrichment select="#555e4fbe-01ca-41f9-b285-af9eae8ad9d0"/>
+  <types:enrichment select="#33f25f72-eb5f-4beb-8767-f7f479ee443f"/>
+  <types:enrichment select="#be2f0e5e-5862-41ac-886c-da4511c485f3"/>
+  <types:enrichment select="#9111c482-49e1-44d9-aac9-046f95fe9dc2"/>
+</types:mule>

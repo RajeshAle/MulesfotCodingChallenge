@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="2dd56857-19e2-4d59-932c-0ba67e2b1587" >
+		<http:listener-connection host="${http.host}" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="3557bbdc-59cb-4ec4-b366-4e40d83094b4" file="${env}-properties.yaml" />
+	<configuration-properties doc:name="Configuration properties" doc:id="69b9cdb6-cb33-48bd-b364-6dadde0622db" file="config/configuration.yaml" />
+	<global-property doc:name="Global Property" doc:id="60d472de-f621-4da5-a35e-b0f247dcac62" name="env" value="dev" />
+	<api-gateway:autodiscovery apiId="15727714" doc:name="API Autodiscovery" doc:id="b63b0257-8a1b-4199-9e69-448f6fdd1c47" flowRef="ContactInfo-main" />
+</mule>

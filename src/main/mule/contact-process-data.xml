@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="identification_update" doc:id="4c29808f-c325-43c1-b6fd-6790fd0050b6" >
+		<ee:transform doc:name="Transform Message" doc:id="41db7791-7226-4dd8-b131-063395a2e341">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+	'fname': payload.FirstName,
+	'lname':payload.LastName,
+	'dob':payload.DOB,
+	'gender':payload.Gender,
+	'title':payload.Title,
+	'id': vars.ID
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="query"><![CDATA['UPDATE identification
+	 SET  firstname = :fname,lastname=:lname,dob=to_date(:dob,' ++ "'" ++ 'MM-DD-YYYY' ++"'" ++'),gender=:gender,title=:title WHERE id= :id;']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="54cc4ff4-0ebc-45a0-9a0c-ac1f1700c957" name="db_update"/>
+	</flow>
+	<flow name="identification_insert" doc:id="be002881-2c85-40fd-bcad-9ba46ab2419e" >
+		<ee:transform doc:name="Transform Message" doc:id="1f14e8e3-6f47-4de0-b756-50f95bba2b53" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+ {
+	'fname': payload.FirstName,
+	'lname':payload.LastName,
+	'dob':payload.DOB,
+	'gender':payload.Gender,
+	'title':payload.Title
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="query" ><![CDATA['INSERT INTO identification(firstname,lastname,dob,gender,title)
+   VALUES (:fname, :lname,to_date(:dob,' ++ "'" ++ 'MM-DD-YYYY' ++"'" ++'),:gender,:title);']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="b0b043d8-e2f4-497e-8ca3-5ceb9fae9017" name="db_insert" />
+	</flow>
+	<flow name="identification_delete" doc:id="48191b3b-dc3f-4da5-b992-18fa6f5d5eab" >
+		<ee:transform doc:name="Transform Message" doc:id="3ebf5e14-95b4-498f-882e-f26dfdbf1eb8">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+	'ID':vars.ID
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="query"><![CDATA['DELETE FROM identification WHERE id=:ID;']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="619fbffe-bfa3-4a73-a6eb-25dd605a3d1f" name="db_delete"/>
+	</flow>
+	<flow name="identification_retrieve" doc:id="e1eae724-86cb-4b7b-bc2f-1ebf5c516a83" >
+		<ee:transform doc:name="Transform Message" doc:id="bb255b85-2a2e-4385-b313-688dd98add75" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	'ID':vars.ID
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="query" ><![CDATA['SELECT *
+
+FROM
+  Identification
+WHERE Identification.id = :ID;']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="45e1756d-7570-4e11-ab99-36de6ece3029" name="db_retrieve"/>
+	</flow>
+	<flow name="address_update" doc:id="dce6050a-4001-4176-b120-e3279e27e8dc" >
+		<ee:transform doc:name="Transform Message" doc:id="1a35040a-4018-40f9-9ed9-045224b5788d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	
+	'add_type':payload.Type,
+	'add_number': payload.Number,
+	'add_unit':payload.Unit,
+	'add_city':payload.City,
+	'add_street':payload.Street,
+	'add_state':payload.State,
+	'add_zipcode':payload.Zipcode,
+	'ID':vars.ID,
+	'identification_id':payload.IdentificationId
+	
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="query" ><![CDATA['UPDATE address SET 
+type= :add_type,
+number=:add_number,
+street=:add_street,
+state=:add_state,
+city=:add_city,
+zipcode=:add_zipcode,
+unit=:add_unit,
+identification_id=:identification_id
+WHERE id=:ID;']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="3d445f44-07b5-4424-926d-8d82109e8747" name="db_update"/>
+	</flow>
+	<flow name="address_insert" doc:id="67d0330f-84ae-4481-bfb4-7399a1ed9fa6" >
+		<ee:transform doc:name="Transform Message" doc:id="d25c6231-0b66-48e8-9fd8-0f2849f50f40" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	
+	'add_type':payload.Type,
+	'add_number': payload.Number,
+	'add_unit':payload.Unit,
+	'add_city':payload.City,
+	'add_street':payload.Street,
+	'add_state':payload.State,
+	'add_zipcode':payload.Zipcode,
+	'identification_id':payload.IdentificationId
+	
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="query" ><![CDATA['INSERT INTO address (type,number,unit,city,street,state,zipcode,identification_id)
+   VALUES (:add_type,:add_number,:add_unit,:add_city,:add_street,:add_state,:add_zipcode,:identification_id)']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="d3ce92cd-c858-4044-8c20-9be8e15b60f2" name="db_insert"/>
+	</flow>
+	<flow name="address_delete" doc:id="286e6149-2c83-4f05-b80b-9d6ffe436cc6" >
+		<ee:transform doc:name="Transform Message" doc:id="308cb49c-24a4-4fd0-9529-2a554a199a42" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	'ID':vars.ID
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="query" ><![CDATA['DELETE FROM address WHERE id=:ID;']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="1255d39c-16e6-43ce-94aa-98aba0711c03" name="db_delete"/>
+	</flow>
+	<flow name="address_retrieve" doc:id="da725c41-2c35-4a3b-8502-8205a80ee79a" >
+		<ee:transform doc:name="Transform Message" doc:id="f626509c-127d-402a-a469-a459eb04ac06" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	'ID':vars.ID
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="query" ><![CDATA['SELECT *
+   FROM address WHERE id=:ID;']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="c7fd6253-50f7-47fc-a42f-c51880052393" name="db_retrieve"/>
+	</flow>
+	<flow name="communication_update" doc:id="f72a8bf6-0211-4a6c-8fc9-d1f8cde67880" >
+		<ee:transform doc:name="Transform Message" doc:id="6edb2e9b-854d-4f66-8edf-17337d311e01" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	'comm_Type':payload.Type,
+	'comm_Value':payload.Value,
+	'comm_Preferred':payload.Preferred,
+	'identification_id':payload.IdentificationId,
+	'ID':vars.ID
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="query" ><![CDATA['UPDATE communication SET type=:comm_Type,value=:comm_Value,preferred=:comm_Preferred,identification_id=:identification_id WHERE id=:ID;']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="e40f717b-9ccd-457d-a00c-0eab9c10a232" name="db_update"/>
+	</flow>
+	<flow name="communication_insert" doc:id="6519b8a0-329f-42ae-8468-a56fe4869308" >
+		<ee:transform doc:name="Transform Message" doc:id="95763dfa-be52-4f80-997e-50d0e887d6a4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	'comm_Type':payload.Type,
+	'comm_Value':payload.Value,
+	'comm_Preferred':payload.Preferred,
+	'identification_id':payload.IdentificationId
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="query" ><![CDATA['INSERT INTO communication (type, preferred,value,identification_id)        
+VALUES (:comm_Type,:comm_Preferred,:comm_Value,:identification_id);']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="9dbc5b03-f7b9-49a3-90d5-6db506a5d85b" name="db_insert"/>
+	</flow>
+	<flow name="communication_delete" doc:id="a6721fa8-f8ff-482a-8c70-1721946366dc" >
+		<ee:transform doc:name="Transform Message" doc:id="7824f65f-a4d3-472f-a3b9-bc9806583c40" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	'ID':vars.ID
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="query" ><![CDATA['DELETE FROM communication WHERE id=:ID;']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="0e2277f2-8d0a-4a4a-b244-2a16a466a60a" name="db_delete"/>
+	</flow>
+	<flow name="communication_retrieve" doc:id="ca64ecda-de37-4418-9b21-8758ce327534" >
+		<ee:transform doc:name="Transform Message" doc:id="1dc5366c-b5ba-457c-b566-01db44185213" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	'ID':vars.ID
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="query" ><![CDATA['SELECT * FROM communication WHERE id=:ID']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="1edae57d-c9da-4f03-b725-ebb73614211b" name="db_retrieve"/>
+	</flow>
+	<flow name="composte_insert" doc:id="7c93b368-bfe9-4ce7-8aa2-5963352db1dc" >
+		<ee:transform doc:name="Transform Message" doc:id="ab6ceec3-0e71-4059-ae01-e63dd09bb937" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload.Identification
+]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="actual_payload" ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="12eb008d-a582-4e4a-9618-aa924eade91e" name="identification_insert"/>
+		<set-variable value="#[payload.Id]" doc:name="Set Variable" doc:id="7441dc3c-eb41-4166-8a25-6bdf3ad92382" variableName="Identification_Id"/>
+		<scatter-gather doc:name="Scatter-Gather" doc:id="3b608c3f-aa0a-4504-a093-7dce7cd726ca" >
+			<route >
+				<choice doc:name="Choice" doc:id="8ad8de2d-c7fe-451c-89af-706586c45496">
+					<when expression="#[sizeOf(vars.actual_payload.Communication ) &gt;0]">
+						<ee:transform doc:name="Transform Message" doc:id="eca141d0-2a35-4126-a64f-697e3bb0dca4">
+							<ee:message>
+								<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+vars.actual_payload.Communication]]></ee:set-payload>
+							</ee:message>
+							<ee:variables>
+								<ee:set-variable variableName="Communication_Id"><![CDATA[%dw 2.0
+output application/java
+---
+
+	[] as Array
+]]></ee:set-variable>
+							</ee:variables>
+						</ee:transform>
+						<foreach doc:name="For Each" doc:id="a8156ce4-39ca-4401-ad8c-bbf257d94e53">
+							<ee:transform doc:name="Transform Message" doc:id="81c7c960-6ee7-4979-b8af-bfade8fdf621">
+								<ee:message>
+									<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload ++ {IdentificationId: vars.Identification_Id}]]></ee:set-payload>
+								</ee:message>
+							</ee:transform>
+							<flow-ref doc:name="Flow Reference" doc:id="d3150340-9c71-433a-8605-56b39f608f1a" name="communication_insert" />
+							<ee:transform doc:name="Transform Message" doc:id="09379a17-6316-4fae-9a50-3608d160a303">
+								<ee:message>
+									<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+								</ee:message>
+								<ee:variables>
+									<ee:set-variable variableName="Communication_Id"><![CDATA[%dw 2.0
+output application/json
+---
+flatten(vars.*Communication_Id ++ [payload.Id])]]></ee:set-variable>
+								</ee:variables>
+							</ee:transform>
+						</foreach>
+					</when>
+				</choice>
+			</route>
+			<route>
+				<choice doc:name="Choice" doc:id="f836dfdc-b885-4076-8985-d0939cf40505" >
+			<when expression="#[sizeOf(vars.actual_payload.Address ) &gt; 0]">
+				<ee:transform doc:name="Transform Message" doc:id="ab1cfef3-a3c9-40cf-ad31-0f06449be645">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+vars.actual_payload.Address]]></ee:set-payload>
+			</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="Address_Id" ><![CDATA[%dw 2.0
+output application/java
+---
+[] as Array]]></ee:set-variable>
+					</ee:variables>
+		</ee:transform>
+				<foreach doc:name="For Each" doc:id="5d392663-ff4d-4b8e-9cbf-aeb2554f0d62" >
+					<ee:transform doc:name="Transform Message" doc:id="17956984-3661-4e58-9afb-b1294cd5ff43" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload ++ {IdentificationId: vars.Identification_Id}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+					<flow-ref doc:name="Flow Reference" doc:id="440487b7-31ea-4b35-9e98-a7464e9d9ea7" name="address_insert"/>
+					<ee:transform doc:name="Transform Message" doc:id="f479ca39-1783-4627-bd86-85e33b2dad3b" >
+						<ee:message >
+						</ee:message>
+						<ee:variables >
+							<ee:set-variable variableName="Address_Id" ><![CDATA[%dw 2.0
+output application/json
+---
+flatten(vars.*Address_Id ++ [payload.Id])]]></ee:set-variable>
+						</ee:variables>
+					</ee:transform>
+				</foreach>
+			</when>
+		
+		</choice>
+			</route>
+		</scatter-gather>
+		
+		<ee:transform doc:name="Transform Message" doc:id="6db74d2e-f444-448f-a4d1-1c545e2e8a93">
+							<ee:message>
+								<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	Identification_Id: vars.Identification_Id,
+	Address_Id:vars.Address_Id,
+	Communication_Id:vars.Communication_Id 
+}]]></ee:set-payload>
+							</ee:message>
+						</ee:transform>
+		
+	</flow>
+	
+</mule>

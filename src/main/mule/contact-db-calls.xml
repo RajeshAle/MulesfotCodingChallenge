@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="35879361-b86e-436f-8426-b28f14d87a67" >
+		<db:generic-connection url="jdbc:postgresql://${db.host}:${db.port}/${db.name}" user="${db.username}" password="${db.password}" driverClassName="org.postgresql.Driver"/>
+	</db:config>
+	<flow name="db_retrieve" doc:id="73811b7e-59e0-4864-a203-c2836f94a30f" >
+		<db:select doc:name="Select" doc:id="dd6b0b76-e9ab-4f5a-a2be-7ea4cd026f75" config-ref="Database_Config">
+			<db:sql >#[vars.query]</db:sql>
+			<db:input-parameters ><![CDATA[#[payload]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="a0233add-fde4-404a-b9af-0bb6940f77c0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="db_insert" doc:id="95d51809-94f2-47e5-8258-56d6084e1849" >
+		<db:insert doc:name="Insert" doc:id="12427969-46e3-4f33-a4d1-848143c19483" config-ref="Database_Config" autoGenerateKeys="true">
+			<db:sql>#[vars.query]</db:sql>
+			<db:input-parameters><![CDATA[#[payload]]]></db:input-parameters>
+				</db:insert>
+		<ee:transform doc:name="Transform Message" doc:id="118a2088-81fa-4dce-b4d3-6deff5574cf1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	Id: payload.generatedKeys.id
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="db_update" doc:id="d8b5bb49-ca02-4e14-a243-f755e71795f4" >
+		<db:update doc:name="Update" doc:id="1c7b97ba-d100-494d-a8a8-85a191661a6a" config-ref="Database_Config" autoGenerateKeys="true">
+			<db:sql >#[vars.query]</db:sql>
+			<db:input-parameters ><![CDATA[#[payload]]]></db:input-parameters>
+		</db:update>
+		<ee:transform doc:name="Transform Message" doc:id="f432c9cc-7145-4a1c-9512-1da0637cc194" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: "Successfully Updated."
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="db_delete" doc:id="77672922-4eae-4b20-a7f7-781f66693838" >
+		<db:delete doc:name="Delete" doc:id="c52f91ec-c9a0-4747-8bf0-f8f96ea345bf" config-ref="Database_Config">
+			<db:sql >#[vars.query]</db:sql>
+			<db:input-parameters ><![CDATA[#[payload]]]></db:input-parameters>
+		</db:delete>
+		<ee:transform doc:name="Transform Message" doc:id="a7f019a1-4ce1-43e1-abf0-7c4016c9b3aa" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message:"Successfully Deleted."
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

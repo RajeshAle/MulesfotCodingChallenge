@@ -1,0 +1,154 @@
+#%RAML 1.0
+title: ContactInfo
+version: v1
+description: "Assignment for MS3 INC"
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/c4a78d4f-02c7-4283-94d7-6eaaca2bbf6d/ # baseUri: http://ms3inc-v1-dev.us.e2.cloudhub.io
+protocols: [HTTP]
+mediaType: application/json
+
+types:
+  Identification:
+    type: object
+    properties:
+      FirstName:
+        required: true
+        type: string
+      LastName:
+        required: true
+        type: string
+      DOB:
+        required: false
+        type: string
+      Gender:
+        required: false
+        type: string
+      Title:
+        required: false
+        type: string
+      ID:
+        required: false
+        type: string
+  Address:
+    type: object
+    properties:
+      City:
+        required: false
+        type: string
+      State:
+        required: false
+        type: string
+      Zipcode:
+        required: false
+        type: string
+      Street:
+        required: false
+        type: string
+      Type:
+        required: false
+        type: string
+      Number:
+        required: false
+        type: number
+      Unit:
+        required: false
+        type: string
+      IdentificationId:
+        required: false
+        type: number
+  Communication:
+    type: object
+    properties:
+      Type:
+        required: false
+        type: string
+      Value:
+        required: false
+        type: string
+      Preferred:
+        required: false
+        type: string
+      IdentificationId:
+        required: false
+        type: number
+  Contact:
+    type: object
+    properties:
+      Identification: Identification
+      Address: Addresses
+      Communication : Communications
+  Addresses:
+    type: Address[]
+  Communications:
+    type: Communication[]    
+
+
+/composite:
+   post:
+      body:
+        application/json: Contact
+/address:
+   post:
+      body:
+        application/json: Address
+   /{ID}:
+    uriParameters:
+        ID:
+         type: string
+         required: true
+         maxLength: 50
+         description: This is Identification Record ID
+    get:
+      responses:
+        200:
+          body:
+            application/json: Address[]
+    delete:
+    put:
+       body:
+         application/json: Address
+
+
+/communication:
+  post:
+      body:
+        application/json: Communication
+
+  /{ID}:
+    uriParameters:
+        ID:
+         type: string
+         required: true
+         maxLength: 50
+         description: This is Identification Record ID
+    put:
+      body:
+        application/json: Communication
+
+    get:
+      responses:
+        200:
+          body:
+            application/json: Communication[]
+    delete:
+/identification:
+  post:
+      body:
+        application/json: Identification
+
+  /{ID}:
+    uriParameters:
+        ID:
+         type: string
+         required: true
+         maxLength: 50
+         description: This is Identification Record ID
+    put:
+      body:
+        application/json: Identification
+
+    get:
+      responses:
+        200:
+          body:
+            application/json: Identification[]
+    delete:

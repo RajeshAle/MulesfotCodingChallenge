@@ -1,0 +1,7 @@
+api:
+  autodiscovery:
+    id: "15725478"
+http:
+  host: "0.0.0.0"
+  port: "8081"
+  basepath: "/"
