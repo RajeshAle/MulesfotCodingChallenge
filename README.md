@@ -15,36 +15,36 @@ Below are the URLs to consume. (**Dont forget to send client_id and client_secre
 
 **Currently the application is deployed in my trial-account of mulesoft cloud. it might get expire exactly one month from today June 11th**
 
- - http://ms3inc.us-e2.cloudhub.io/api/composite - POST  (application/json) -- for inserting identification,address and communication
+ - http://ms3inc.us-e2.cloudhub.io/api/composite - POST  (application/json) -- for inserting identification,address and communication records in one go.
   
-  -  http://ms3inc.us-e2.cloudhub.io/api/address - POST  (application/json) for inserting address
+  -  http://ms3inc.us-e2.cloudhub.io/api/address - POST  (application/json) for inserting address record.
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - PUT/ID  (application/json) for updating address
+  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - PUT/ID  (application/json) for updating address record.
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - GET/ID   for updating address
+  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - GET/ID   for retrieving address record.
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - DELETE/ID for deleting address
+  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - DELETE/ID for deleting address record.
 	
-   - http://ms3inc.us-e2.cloudhub.io/api/identification - POST(application/json) for inserting identification
+   - http://ms3inc.us-e2.cloudhub.io/api/identification - POST(application/json) for inserting identification record.
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/identification/45 - PUT/ID  (application/json) for updating identification
+  	- http://ms3inc.us-e2.cloudhub.io/api/identification/45 - PUT/ID  (application/json) for updating identification record.
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/identification/45 - GET/ID   for updating identification
+  	- http://ms3inc.us-e2.cloudhub.io/api/identification/45 - GET/ID   for retrieving identification record.
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/identification/45 - DELETE/ID for deleting identification
+  	- http://ms3inc.us-e2.cloudhub.io/api/identification/45 - DELETE/ID for deleting identification record.
   
-  - http://ms3inc.us-e2.cloudhub.io/api/communication - POST(application/json) for inserting communication
+  - http://ms3inc.us-e2.cloudhub.io/api/communication - POST(application/json) for inserting communication record.
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/communication/45 - PUT/ID  (application/json) for updating communication
+  	- http://ms3inc.us-e2.cloudhub.io/api/communication/45 - PUT/ID  (application/json) for updating communication record.
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/communication/45 - GET/ID   for updating communication
+  	- http://ms3inc.us-e2.cloudhub.io/api/communication/45 - GET/ID   for retrieving communication record.
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/communication/45 - DELETE/ID for deleting communication
+  	- http://ms3inc.us-e2.cloudhub.io/api/communication/45 - DELETE/ID for deleting communication record.
   
   
   /composite 
   
-  Request :
+  Sample Request :
   ```json
   {
   "Identification": {
@@ -88,7 +88,7 @@ Below are the URLs to consume. (**Dont forget to send client_id and client_secre
   ]
 }
 ``` 
-Response: 
+Sample Response: 
   ```json
 {
   "Identification_Id": 79,
@@ -103,10 +103,10 @@ Response:
 }
 ```
 
-Using the Id's in response for each object we can update,get,delete that particular from database.
+Using the Ids from the above response, we can update,get,delete records from each table.
 
 /address: POST
- Request : For now we are allowing to post only one single address object
+ Sample Request : For now we are allowing to post only one single address object
    ```json
  {
   "Type": "always",
@@ -116,10 +116,10 @@ Using the Id's in response for each object we can update,get,delete that particu
   "City": "Somewhere",
   "State": "WV",
   "Zipcode": "12345",
-  "IdentificationId":"71"   // having this field in request can lets you know to which identification it can be attached
+  "IdentificationId":"71"   // having this field in request, we can attach this address record to a specific identification record.
 }
 ```
-Response: 
+Sample Response: 
  ```json
 {
 "Id": 73
@@ -132,18 +132,18 @@ Response:
 
 /communication: POST allows you to create one single object on communication table in database
 
-Request:
+Sample Request:
  ```json
 {
    
       "Type": "email",
       "Value": "bfe@sample.com",
       "Preferred": "true",
-  "IdentificationId":"71"
+  "IdentificationId":"71" // having this field in request, we can attach this communication record to a specific identification record.
 }
   ```
   
-  Response: 
+  Sample Response: 
    ```json
    {
 "Id": 66
@@ -155,7 +155,7 @@ Request:
 
 /identification: POST
 
-Request:
+Sample Request:
 
  ```json
  {
@@ -167,7 +167,7 @@ Request:
   }
    ```
    
-   Response:
+   Sample Response:
    
   ```json
     {
