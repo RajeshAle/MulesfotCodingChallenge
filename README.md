@@ -9,37 +9,37 @@ As Part of Contact-Info API , i exposed 4 Resources
 
 
 Below are the URLs to consume. (**Dont forget to send client_id and client_secret in request header section**)
-*client_id:90c7b4e0bfbf4f88aa047718d1739225
+*client_id:90c7b4e0bfbf4f88aa047718d1739225*
 
-client_secret:2796dE2DB44a42eAb57e6e5981b71C7c*
+*client_secret:2796dE2DB44a42eAb57e6e5981b71C7c*
 
-**Currently the application is deployed in my trial-account of mulesoft cloud. it might get expire exactly one month from today - June 11th **
+**Currently the application is deployed in my trial-account of mulesoft cloud. it might get expire exactly one month from today June 11th**
 
-  http://ms3inc.us-e2.cloudhub.io/api/composite - POST  (application/json) -- for inserting identification,address and communication
+ - http://ms3inc.us-e2.cloudhub.io/api/composite - POST  (application/json) -- for inserting identification,address and communication
   
-  a.  http://ms3inc.us-e2.cloudhub.io/api/address - POST  (application/json) for inserting address 
+  -  http://ms3inc.us-e2.cloudhub.io/api/address - POST  (application/json) for inserting address 
   
-  b. http://ms3inc.us-e2.cloudhub.io/api/address/32 - PUT/ID  (application/json) for updating address 
+  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - PUT/ID  (application/json) for updating address 
   
-  c. http://ms3inc.us-e2.cloudhub.io/api/address/32 - GET/ID   for retrieving address 
+  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - GET/ID   for retrieving address 
   
-  d. http://ms3inc.us-e2.cloudhub.io/api/address/32 - DELETE/ID  for deleting address 
+  	- http://ms3inc.us-e2.cloudhub.io/api/address/32 - DELETE/ID  for deleting address 
   
-  e. http://ms3inc.us-e2.cloudhub.io/api/identification - POST  (application/json) for inserting identification
+  - http://ms3inc.us-e2.cloudhub.io/api/identification - POST  (application/json) for inserting identification
   
-  f. http://ms3inc.us-e2.cloudhub.io/api/identification/45 - PUT/ID  (application/json) for updating identification
+  	- http://ms3inc.us-e2.cloudhub.io/api/identification/45 - PUT/ID  (application/json) for updating identification
   
-  g. http://ms3inc.us-e2.cloudhub.io/api/identification/45 - GET/ID   for updating identification
+  	- http://ms3inc.us-e2.cloudhub.io/api/identification/45 - GET/ID   for updating identification
   
-  h. http://ms3inc.us-e2.cloudhub.io/api/identification/45 - DELETE/ID for deleting identification
+  	- http://ms3inc.us-e2.cloudhub.io/api/identification/45 - DELETE/ID for deleting identification
   
-  i. http://ms3inc.us-e2.cloudhub.io/api/communication - POST(application/json) for inserting communication
+  - http://ms3inc.us-e2.cloudhub.io/api/communication - POST(application/json) for inserting communication
   
-  j. http://ms3inc.us-e2.cloudhub.io/api/communication/65 - PUT(application/json) for inserting communication
+  	- http://ms3inc.us-e2.cloudhub.io/api/communication/65 - PUT(application/json) for inserting communication
   
-  k. http://ms3inc.us-e2.cloudhub.io/api/communication/65 - GET for inserting communication
+  	- http://ms3inc.us-e2.cloudhub.io/api/communication/65 - GET for inserting communication
   
-  l. http://ms3inc.us-e2.cloudhub.io/api/communication/65 - DELETE for inserting communication
+  	- http://ms3inc.us-e2.cloudhub.io/api/communication/65 - DELETE for inserting communication
   
   
   /composite 
