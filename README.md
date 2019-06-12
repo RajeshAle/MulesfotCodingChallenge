@@ -35,11 +35,11 @@ Below are the URLs to consume. (**Dont forget to send client_id and client_secre
   
   - http://ms3inc.us-e2.cloudhub.io/api/communication - POST(application/json) for inserting communication
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/communication/65 - PUT(application/json) for inserting communication
+  	- http://ms3inc.us-e2.cloudhub.io/api/communication/45 - PUT/ID  (application/json) for updating communication
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/communication/65 - GET for inserting communication
+  	- http://ms3inc.us-e2.cloudhub.io/api/communication/45 - GET/ID   for updating communication
   
-  	- http://ms3inc.us-e2.cloudhub.io/api/communication/65 - DELETE for inserting communication
+  	- http://ms3inc.us-e2.cloudhub.io/api/communication/45 - DELETE/ID for deleting communication
   
   
   /composite 
