@@ -238,7 +238,7 @@ I tried to implement experience ,process and system pattern. all the db related 
     |preferred              | text    |
     |identification_id      | integer |
 
-- SQL Queries for creating table:
+- Scripts for creating tables:
 
 
    -identification: 
